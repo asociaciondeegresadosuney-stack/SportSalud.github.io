@@ -69,6 +69,20 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
+# BARRA LATERAL (Sidebar con Logo e Identidad Institucional)
+# -----------------------------------------------------------------------------
+with st.sidebar:
+    # URL de ejemplo de un logotipo médico profesional (puedes cambiarlo por tu archivo local o ruta en GitHub)
+    st.image("https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&auto=format&fit=crop&q=80", use_container_width=True)
+    st.markdown("---")
+    st.markdown("### 🫀 Panel del Especialista")
+    st.markdown("**Lic. Carlos Pacheco**")
+    st.markdown("*Fisiólogo Cardiovascular*")
+    st.markdown("📍 Caracas / Modalidad Online")
+    st.markdown("---")
+    st.markdown("💡 *'La salud vascular no es un destino, es una práctica diaria de protección endotelial.'*")
+
+# -----------------------------------------------------------------------------
 # FUNCIONES AUXILIARES PARA GENERAR DOCUMENTO DOCX (python-docx)
 # -----------------------------------------------------------------------------
 def set_cell_background(cell, fill_color):
@@ -89,14 +103,12 @@ def set_cell_margins(cell, top=120, bottom=120, left=150, right=150):
 def generate_docx_report(patient_name, age, pas, activity, risk_score, risk_category, recommendation):
     doc = Document()
     
-    # Márgenes de 1 pulgada
     for section in doc.sections:
         section.top_margin = Inches(1)
         section.bottom_margin = Inches(1)
         section.left_margin = Inches(1)
         section.right_margin = Inches(1)
         
-        # Encabezado
         header = section.header
         hp = header.paragraphs[0]
         hp.text = "LIC. CARLOS PACHECO | EVALUACIÓN DE SALUD VASCULAR Y ENDOTELIAL"
@@ -109,14 +121,12 @@ def generate_docx_report(patient_name, age, pas, activity, risk_score, risk_cate
     ALT_GRAY_HEX = "F8F9FA"
     NAVY = RGBColor(10, 37, 64)
 
-    # Estilos de Título
     h1 = doc.styles['Heading 1']
     h1.font.name = 'Arial'; h1.font.size = Pt(18); h1.font.bold = True; h1.font.color.rgb = NAVY
     h1.paragraph_format.space_before = Pt(16); h1.paragraph_format.space_after = Pt(6)
 
     doc.add_heading('Informe Fisiológico de Riesgo Vascular', level=1)
     
-    # Datos del Paciente
     p_info = doc.add_paragraph()
     p_info.add_run("Paciente: ").bold = True
     p_info.add_run(f"{patient_name}  |  ")
@@ -127,7 +137,6 @@ def generate_docx_report(patient_name, age, pas, activity, risk_score, risk_cate
     p_info.add_run("Nivel de Actividad: ").bold = True
     p_info.add_run(f"{activity}")
 
-    # Tabla de Resultados
     table = doc.add_table(rows=3, cols=2)
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     
@@ -157,32 +166,38 @@ def generate_docx_report(patient_name, age, pas, activity, risk_score, risk_cate
 
     doc.add_paragraph().paragraph_format.space_after = Pt(10)
     
-    # Recomendación del Especialista
     p_rec = doc.add_paragraph()
     p_rec.add_run("Prescripción de Ejercicio Seguro & Recomendación:").bold = True
     p_rec.runs[0].font.color.rgb = NAVY
     doc.add_paragraph(recommendation)
 
-    # Pie institucional
     p_footer = doc.add_paragraph()
     p_footer.add_run("\nLic. Carlos Pacheco | Fisiólogo & Especialista en Protección Endotelial\nContacto: pachecohx@gmail.com | WhatsApp: +58 412-0582064").italic = True
 
-    # Guardar en buffer de memoria
     target_stream = io.BytesIO()
     doc.save(target_stream)
     target_stream.seek(0)
     return target_stream
 
 # -----------------------------------------------------------------------------
-# ENCABEZADO Y MARCA PERSONAL
+# ENCABEZADO PRINCIPAL (Diseño Profesional con Columnas y Logotipo)
 # -----------------------------------------------------------------------------
-st.markdown("""
-    <div class="main-header">
-        <h1 style="margin:0; font-size:2.5rem;">Lic. Carlos Pacheco</h1>
-        <h3 style="margin:0; font-weight:400; color:#E2E8F0;">Fisiólogo & Salud Vascular a tu Alcance</h3>
-        <p class="slogan-tag">Especialista en Prescripción de Ejercicios Seguros y Protección Endotelial</p>
-    </div>
-""", unsafe_allow_html=True)
+header_col1, header_col2 = st.columns([1, 4])
+
+with header_col1:
+    # Mini logotipo circular o escudo médico institucional en la cabecera
+    st.image("https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=300&auto=format&fit=crop&q=80", use_container_width=True)
+
+with header_col2:
+    st.markdown("""
+        <div class="main-header" style="margin-bottom:0; padding: 1.5rem;">
+            <h1 style="margin:0; font-size:2.2rem;">Lic. Carlos Pacheco</h1>
+            <h3 style="margin:0; font-weight:400; color:#E2E8F0; font-size:1.2rem;">Fisiólogo & Salud Vascular a tu Alcance</h3>
+            <p class="slogan-tag" style="margin-bottom:0;">Especialista en Prescripción de Ejercicios Seguros y Protección Endotelial</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
 # NAVEGACIÓN Y PESTAÑAS INTERACTIVAS
@@ -200,6 +215,11 @@ tab1, tab2, tab3, tab4 = st.tabs([
 with tab1:
     st.header("Calculadora Interactiva de Riesgo Endotelial y Presión Arterial")
     st.write("Completa tus datos para obtener una estratificación fisiológica inmediata y generar tu informe médico.")
+
+    # Imagen representativa del servicio / evaluación vascular integrando neuromarketing
+    st.image("https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1200&auto=format&fit=crop&q=80", 
+             caption="Monitoreo hemodinámico y evaluación de la flexibilidad arterial basada en evidencia científica.", 
+             use_container_width=True)
 
     col1, col2 = st.columns([1, 1])
 
@@ -235,7 +255,6 @@ with tab1:
     with col2:
         st.subheader("Resultados del Perfil Hemodinámico")
         
-        # Gráfico dinámico Gauge Plot
         fig = go.Figure(go.Indicator(
             mode = "gauge+number",
             value = risk_score,
@@ -261,7 +280,6 @@ with tab1:
             </div>
         """, unsafe_allow_html=True)
 
-        # Generar informe en formato Word (docx)
         docx_file = generate_docx_report(patient_name, age, pas, activity, risk_score, risk_cat, recommendation)
         
         st.download_button(
@@ -271,7 +289,6 @@ with tab1:
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )
 
-        # Botón de consulta inmediata por WhatsApp
         msg_encoded = urllib.parse.quote(f"Hola Lic. Carlos Pacheco, realicé la evaluación en su plataforma para {patient_name} ({age} años). Presión Sistólica: {pas} mmHg. Riesgo: {risk_cat}. Deseo coordinar una consulta.")
         wa_url = f"https://wa.me/584120582064?text={msg_encoded}"
         st.markdown(f'<a href="{wa_url}" target="_blank"><button style="width:100%; padding:10px; background-color:#25D366; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">📱 Enviar Evaluación por WhatsApp (+58 412-0582064)</button></a>', unsafe_allow_html=True)
