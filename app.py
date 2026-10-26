@@ -75,7 +75,7 @@ with st.sidebar:
     try:
         st.image("assets/logo1.png", use_container_width=True)
     except Exception:
-        st.warning("No se pudo cargar 'assets/logo1.png'. Verifica la ruta en GitHub.")
+        st.warning("⚠️ No se pudo cargar 'assets/logo1.png'. Revisa que el archivo exista en la carpeta assets de GitHub y termine en .png")
         
     st.markdown("---")
     st.markdown("### 🫀 Panel del Especialista")
@@ -191,7 +191,7 @@ with header_col1:
     try:
         st.image("assets/logo2.png", use_container_width=True)
     except Exception:
-        st.write("🖼️ [Logo 2]")
+        st.warning("⚠️ No se pudo cargar 'assets/logo2.png'.")
 
 with header_col2:
     st.markdown("""
