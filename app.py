@@ -69,11 +69,14 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# BARRA LATERAL (Sidebar con Logo e Identidad Institucional)
+# BARRA LATERAL (Sidebar con logo1.png)
 # -----------------------------------------------------------------------------
 with st.sidebar:
-    # URL de ejemplo de un logotipo médico profesional (puedes cambiarlo por tu archivo local o ruta en GitHub)
-    st.image("https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&auto=format&fit=crop&q=80", use_container_width=True)
+    try:
+        st.image("assets/logo1.png", use_container_width=True)
+    except Exception:
+        st.warning("No se pudo cargar 'assets/logo1.png'. Verifica la ruta en GitHub.")
+        
     st.markdown("---")
     st.markdown("### 🫀 Panel del Especialista")
     st.markdown("**Lic. Carlos Pacheco**")
@@ -180,13 +183,15 @@ def generate_docx_report(patient_name, age, pas, activity, risk_score, risk_cate
     return target_stream
 
 # -----------------------------------------------------------------------------
-# ENCABEZADO PRINCIPAL (Diseño Profesional con Columnas y Logotipo)
+# ENCABEZADO PRINCIPAL (Con logo2.png)
 # -----------------------------------------------------------------------------
 header_col1, header_col2 = st.columns([1, 4])
 
 with header_col1:
-    # Mini logotipo circular o escudo médico institucional en la cabecera
-    st.image("https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=300&auto=format&fit=crop&q=80", use_container_width=True)
+    try:
+        st.image("assets/logo2.png", use_container_width=True)
+    except Exception:
+        st.write("🖼️ [Logo 2]")
 
 with header_col2:
     st.markdown("""
@@ -215,11 +220,6 @@ tab1, tab2, tab3, tab4 = st.tabs([
 with tab1:
     st.header("Calculadora Interactiva de Riesgo Endotelial y Presión Arterial")
     st.write("Completa tus datos para obtener una estratificación fisiológica inmediata y generar tu informe médico.")
-
-    # Imagen representativa del servicio / evaluación vascular integrando neuromarketing
-    st.image("https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1200&auto=format&fit=crop&q=80", 
-             caption="Monitoreo hemodinámico y evaluación de la flexibilidad arterial basada en evidencia científica.", 
-             use_container_width=True)
 
     col1, col2 = st.columns([1, 1])
 
