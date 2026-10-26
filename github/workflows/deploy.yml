@@ -23,7 +23,7 @@ jobs:
 
       - name: Ejecutar script de Python
         run: |
-          python tu_archivo.py
+          python app.py
 
       - name: Subir cambios generados
         run: |
