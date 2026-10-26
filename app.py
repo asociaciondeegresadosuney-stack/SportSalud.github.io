@@ -108,8 +108,6 @@ def generate_docx_report(patient_name, age, pas, activity, risk_score, risk_cate
     NAVY_HEX = "0A2540"
     ALT_GRAY_HEX = "F8F9FA"
     NAVY = RGBColor(10, 37, 64)
-    GRAY = RGBColor(108, 117, 125)
-    BLACK = RGBColor(33, 37, 41)
 
     # Estilos de Título
     h1 = doc.styles['Heading 1']
