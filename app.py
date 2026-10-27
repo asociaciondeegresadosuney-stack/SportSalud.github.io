@@ -23,6 +23,21 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Inicializar el estado de sesión para el Foro de Debate en Línea
+if "forum_messages" not in st.session_state:
+    st.session_state.forum_messages = [
+        {
+            "user": "Dr. Roberto Mendoza", 
+            "topic": "1. Horario Óptimo para Entrenar (HTA)", 
+            "comment": "Excelente artículo. Es fundamental controlar la frecuencia cardíaca máxima durante las primeras semanas de adaptación."
+        },
+        {
+            "user": "Lic. Carlos Pacheco", 
+            "topic": "2. Protección Endotelial y Cizallamiento", 
+            "comment": "Exacto Roberto, el estrés de cizallamiento excesivo en pacientes con placas carotídeas inestables representa un riesgo clínico real que debemos dosificar."
+        }
+    ]
+
 # Estilos CSS personalizados para interfaz médica de alto impacto
 st.markdown("""
     <style>
@@ -75,7 +90,7 @@ with st.sidebar:
     try:
         st.image("assets/logo1.png", use_container_width=True)
     except Exception:
-        st.warning("⚠️ No se pudo cargar 'assets/logo1.png'. Revisa que el archivo exista en la carpeta assets de GitHub y termine en .png")
+        st.warning("⚠️ No se pudo cargar 'assets/logo1.png'. Revisa que el archivo exista en la carpeta assets.")
         
     st.markdown("---")
     st.markdown("### 🫀 Panel del Especialista")
@@ -211,7 +226,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "🫀 Evaluación & Calculadora", 
     "💼 Servicios Médicos", 
     "💳 Pasarela de Pagos", 
-    "📚 Blog de Fisiología"
+    "📚 Blog & Foro de Debate"
 ])
 
 # -----------------------------------------------------------------------------
@@ -363,7 +378,7 @@ with tab3:
     st.write("📱 **WhatsApp Soporte Directo:** +58 412-0582064")
 
 # -----------------------------------------------------------------------------
-# TAB 4: BLOG DE FISIOLOGÍA VASCULAR
+# TAB 4: BLOG DE FISIOLOGÍA VASCULAR & FORO DE DEBATE EN LÍNEA
 # -----------------------------------------------------------------------------
 with tab4:
     st.header("Blog de Fisiología Vascular & Longevidad")
@@ -380,6 +395,56 @@ with tab4:
         st.subheader("2. Protección Endotelial: ¿Por qué la Intensidad Excesiva daña tus Arterias?")
         st.write("El estrés de cizallamiento en arterias con ateromas carotídeos puede desestabilizar la placa. Aprende a controlar la velocidad de onda de pulso...")
         st.button("Leer Artículo Completo ->", key="art2_btn")
+
+    st.markdown("---")
+    st.header("💬 Foro de Debate en Línea & Intercambio Clínico")
+    st.write("Comparte tu opinión, plantea preguntas o debate sobre los temas publicados con otros pacientes y especialistas.")
+
+    # Formulario interactivo para enviar comentarios al foro
+    with st.form("forum_form", clear_on_submit=True):
+        f_col1, f_col2 = st.columns(2)
+        with f_col1:
+            forum_user = st.text_input("Tu Nombre o Perfil Profesional")
+        with f_col2:
+            forum_topic = st.selectbox("Tema Asociado", [
+                "1. Horario Óptimo para Entrenar (HTA)",
+                "2. Protección Endotelial y Cizallamiento",
+                "Discusión Libre / Preguntas Generales"
+            ])
+        
+        forum_comment = st.text_area("Escribe tu comentario, duda o experiencia clínica...")
+        submit_btn = st.form_submit_button("Publicar en el Foro")
+
+        if submit_btn:
+            if forum_user.strip() and forum_comment.strip():
+                # Agregar el nuevo comentario al inicio de la lista en st.session_state
+                st.session_state.forum_messages.insert(0, {
+                    "user": forum_user,
+                    "topic": forum_topic,
+                    "comment": forum_comment
+                })
+                st.success("¡Tu comentario ha sido publicado exitosamente en el foro!")
+            else:
+                st.warning("Por favor, ingresa tu nombre y el contenido del comentario antes de publicar.")
+
+    st.markdown("### 📋 Mensajes Recientes en el Foro")
+    
+    # Mostrar todos los mensajes almacenados
+    if not st.session_state.forum_messages:
+        st.info("Aún no hay comentarios en el foro. ¡Sé el primero en iniciar el debate!")
+    else:
+        for msg in st.session_state.forum_messages:
+            st.markdown(f"""
+                <div style="background-color: #F8F9FA; padding: 1.2rem; border-radius: 8px; border-left: 5px solid #00E6C3; margin-bottom: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <p style="margin: 0; font-weight: bold; color: #0A2540; font-size: 1.05rem;">
+                        👤 {msg['user']} 
+                        <span style="font-weight: normal; font-size: 0.85rem; color: #6C757D; float: right;">Tema: {msg['topic']}</span>
+                    </p>
+                    <p style="margin: 0.6rem 0 0 0; color: #212529; line-height: 1.5;">
+                        {msg['comment']}
+                    </p>
+                </div>
+            """, unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
