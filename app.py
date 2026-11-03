@@ -118,7 +118,7 @@ def set_cell_margins(cell, top=120, bottom=120, left=150, right=150):
         tcMar.append(node)
     tcPr.append(tcMar)
 
-def generate_docx_report(patient_name, age, pas, activity, risk_score, risk_category, recommendation):
+def generate_docx_report(patient_name, age, pas, activity, risk_score, risk_category, recommendation, include_nutrisalud):
     doc = Document()
     
     for section in doc.sections:
@@ -143,7 +143,7 @@ def generate_docx_report(patient_name, age, pas, activity, risk_score, risk_cate
     h1.font.name = 'Arial'; h1.font.size = Pt(18); h1.font.bold = True; h1.font.color.rgb = NAVY
     h1.paragraph_format.space_before = Pt(16); h1.paragraph_format.space_after = Pt(6)
 
-    doc.add_heading('Informe Fisiológico de Riesgo Vascular', level=1)
+    doc.add_heading('Informe Fisiológico de Riesgo Vascular & NutriSalud', level=1)
     
     p_info = doc.add_paragraph()
     p_info.add_run("Paciente: ").bold = True
@@ -185,9 +185,15 @@ def generate_docx_report(patient_name, age, pas, activity, risk_score, risk_cate
     doc.add_paragraph().paragraph_format.space_after = Pt(10)
     
     p_rec = doc.add_paragraph()
-    p_rec.add_run("Prescripción de Ejercicio Seguro & Recomendación:").bold = True
+    p_rec.add_run("Prescripción de Ejercicio Seguro & Recomendación Fisiológica:").bold = True
     p_rec.runs[0].font.color.rgb = NAVY
     doc.add_paragraph(recommendation)
+
+    if include_nutrisalud:
+        p_nutri = doc.add_paragraph()
+        p_nutri.add_run("Módulo Especial NutriSalud (Cambio de Hábitos y Bienestar Vascular):").bold = True
+        p_nutri.runs[0].font.color.rgb = NAVY
+        doc.add_paragraph("• Guía Práctica de Sustitución en Supermercado: Incremento de fibra soluble (avena, legumbres) y selección de grasas cardioprotectoras (omega-3, aceite de oliva virgen extra).\n• Plato Protector Endotelial: Estructuración visual de porciones sin necesidad de pesaje estricto.\n• Reto de Hidratación y Hábitos Antiinflamatorios (21 Días): Reducción drástica de sodio oculto y azúcares refinados para favorecer la biodisponibilidad de óxido nítrico.")
 
     p_footer = doc.add_paragraph()
     p_footer.add_run("\nLic. Carlos Pacheco | Fisiólogo & Especialista en Protección Endotelial\nContacto: pachecohx@gmail.com | WhatsApp: +58 412-0582064").italic = True
@@ -244,6 +250,8 @@ with tab1:
         pas = st.slider("Presión Arterial Sistólica (mmHg)", min_value=90, max_value=200, value=135)
         activity = st.selectbox("Frecuencia de Actividad Física", ["Sedentario", "1-2 días/semana (Leve)", "3-4 días/semana (Moderado)", "5+ días/semana (Avanzado)"])
         antecedents = st.multiselect("Factores de Riesgo / Antecedentes", ["Hipertensión Diagnosticada", "Ateromas / Placa Carotídea", "Diabetes / Resistencia a Insulina", "Tabaquismo", "Estrés Crónico"])
+        
+        include_nutrisalud = st.checkbox("Incluir Módulo Especial 'NutriSalud' (Guías de nutrición práctica y cambio de hábitos)", value=True)
 
     # Cálculo del algoritmo fisiológico
     risk_score = 20
@@ -295,7 +303,7 @@ with tab1:
             </div>
         """, unsafe_allow_html=True)
 
-        docx_file = generate_docx_report(patient_name, age, pas, activity, risk_score, risk_cat, recommendation)
+        docx_file = generate_docx_report(patient_name, age, pas, activity, risk_score, risk_cat, recommendation, include_nutrisalud)
         
         st.download_button(
             label="📄 Descargar Informe Médico Oficial (.docx)",
@@ -304,24 +312,33 @@ with tab1:
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )
 
-        msg_encoded = urllib.parse.quote(f"Hola Lic. Carlos Pacheco, realicé la evaluación en su plataforma para {patient_name} ({age} años). Presión Sistólica: {pas} mmHg. Riesgo: {risk_cat}. Deseo coordinar una consulta.")
+        nutri_text = " con Módulo NutriSalud" if include_nutrisalud else ""
+        msg_encoded = urllib.parse.quote(f"Hola Lic. Carlos Pacheco, realicé la evaluación en su plataforma para {patient_name} ({age} años). Presión Sistólica: {pas} mmHg. Riesgo: {risk_cat}{nutri_text}. Deseo coordinar una consulta.")
         wa_url = f"https://wa.me/584120582064?text={msg_encoded}"
         st.markdown(f'<a href="{wa_url}" target="_blank"><button style="width:100%; padding:10px; background-color:#25D366; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">📱 Enviar Evaluación por WhatsApp (+58 412-0582064)</button></a>', unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# TAB 2: SERVICIOS MÉDICOS OFRECIDOS
+# TAB 2: SERVICIOS MÉDICOS OFRECIDOS (Con Módulo NutriSalud incorporado)
 # -----------------------------------------------------------------------------
 with tab2:
-    st.header("Servicios Especializados de Fisiología & Salud Vascular")
+    st.header("Servicios Especializados de Fisiología, Salud Vascular & Nutrición")
     st.write("Programas diseñados con base científica y neuromarketing médico para garantizar resultados sostenibles.")
 
-    s_col1, s_col2, s_col3 = st.columns(3)
+    s_col1, s_col2 = st.columns(2)
 
     with s_col1:
         st.subheader("🩸 Prescripción de Ejercicio Seguro")
         st.write("Diseño de rutina personalizada para personas con hipertensión, cardiopatías o ateromas carotídeos. Control hemodinámico estricto.")
         st.caption("Inversión: $45 USD / Mensual")
         if st.button("Reservar Prescripción", key="btn1"):
+            st.info("Utiliza la pestaña 'Pasarela de Pagos' o contáctanos por WhatsApp para formalizar tu cita.")
+
+        st.markdown("---")
+
+        st.subheader("📊 Consultoría Fisiológica Integral (360°)")
+        st.write("Seguimiento continuo de parámetros hemodinámicos, horario óptimo de entrenamiento adaptado a medicación, e **integración de Nutrición Celular y Fisiológica**.")
+        st.caption("Inversión: $90 USD / Plan Trimestral")
+        if st.button("Reservar Consultoría Integral", key="btn3"):
             st.info("Utiliza la pestaña 'Pasarela de Pagos' o contáctanos por WhatsApp para formalizar tu cita.")
 
     with s_col2:
@@ -331,12 +348,13 @@ with tab2:
         if st.button("Reservar Protección", key="btn2"):
             st.info("Utiliza la pestaña 'Pasarela de Pagos' o contáctanos por WhatsApp para formalizar tu cita.")
 
-    with s_col3:
-        st.subheader("📊 Consultoría Fisiológica Integral")
-        st.write("Seguimiento continuo de parámetros hemodinámicos, horario óptimo de entrenamiento adaptado a medicación y nutrición celular.")
-        st.caption("Inversión: $90 USD / Plan Trimestral")
-        if st.button("Reservar Consultoría", key="btn3"):
-            st.info("Utiliza la pestaña 'Pasarela de Pagos' o contáctanos por WhatsApp para formalizar tu cita.")
+        st.markdown("---")
+
+        st.subheader("🥗 Módulo Especial: NutriSalud (Hábitos & Bienestar)")
+        st.write("Estrategia enfocada en el cambio de hábitos de consumo y bienestar vascular. Incluye **guías nutricionales fáciles de hacer**, recetarios express, listas de compras inteligentes y pautas para armar platos protectores endoteliales sin complicaciones.")
+        st.caption("Inversión: $25 USD (o Add-on por +$20 USD a cualquier plan)")
+        if st.button("Adquirir Módulo NutriSalud", key="btn_nutri"):
+            st.info("Utiliza la pestaña 'Pasarela de Pagos' o contáctanos por WhatsApp para activar tu acceso inmediato.")
 
 # -----------------------------------------------------------------------------
 # TAB 3: PASARELA DE PAGOS (Pago Móvil & ACH Xpress)
