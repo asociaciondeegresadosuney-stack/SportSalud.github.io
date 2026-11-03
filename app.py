@@ -63,6 +63,15 @@ st.markdown("""
         border-radius: 6px;
         margin: 1rem 0;
     }
+    .tally-cta-box {
+        background: linear-gradient(135deg, #0A2540 0%, #1A365D 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-align: center;
+        margin: 1.5rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
     .payment-box {
         background-color: #F1F3F5;
         padding: 1.5rem;
@@ -315,7 +324,25 @@ with tab1:
         nutri_text = " con Módulo NutriSalud" if include_nutrisalud else ""
         msg_encoded = urllib.parse.quote(f"Hola Lic. Carlos Pacheco, realicé la evaluación en su plataforma para {patient_name} ({age} años). Presión Sistólica: {pas} mmHg. Riesgo: {risk_cat}{nutri_text}. Deseo coordinar una consulta.")
         wa_url = f"https://wa.me/584120582064?text={msg_encoded}"
-        st.markdown(f'<a href="{wa_url}" target="_blank"><button style="width:100%; padding:10px; background-color:#25D366; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">📱 Enviar Evaluación por WhatsApp (+58 412-0582064)</button></a>', unsafe_allow_html=True)
+        st.markdown(f'<a href="{wa_url}" target="_blank"><button style="width:100%; padding:10px; background-color:#25D366; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin-top:10px;">📱 Enviar Evaluación por WhatsApp (+58 412-0582064)</button></a>', unsafe_allow_html=True)
+
+    # -----------------------------------------------------------------------------
+    # BOTÓN ESPECIAL DE LLAMADA A LA ACCIÓN (Tally.so Evaluation Program)
+    # -----------------------------------------------------------------------------
+    st.markdown("---")
+    st.markdown("""
+        <div class="tally-cta-box">
+            <h3 style="margin:0; color:#00E6C3;">🚀 ¿Listo para transformar tus hábitos y proteger tu salud vascular?</h3>
+            <p style="margin:0.6rem 0 1rem 0; color:#E2E8F0; font-size:1.05rem;">
+                Participa en nuestro programa especializado y accede a las guías prácticas de nutrición y bienestar.
+            </p>
+            <a href="https://tally.so/r/X55a4P" target="_blank">
+                <button style="background-color:#00E6C3; color:#0A2540; padding:12px 24px; border:none; border-radius:8px; font-weight:bold; font-size:1.1rem; cursor:pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+                    📝 Participar en el Programa de Evaluación Rápida (Tally.so)
+                </button>
+            </a>
+        </div>
+    """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
 # TAB 2: SERVICIOS MÉDICOS OFRECIDOS (Con Módulo NutriSalud incorporado)
