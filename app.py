@@ -357,13 +357,13 @@ with tab2:
             st.info("Utiliza la pestaña 'Pasarela de Pagos' o contáctanos por WhatsApp para activar tu acceso inmediato.")
 
 # -----------------------------------------------------------------------------
-# TAB 3: PASARELA DE PAGOS (Pago Móvil & ACH Xpress)
+# TAB 3: PASARELA DE PAGOS (Pago Móvil, Zinli & Wally)
 # -----------------------------------------------------------------------------
 with tab3:
     st.header("Pasarela de Pagos Directa & Segura")
-    st.write("Selecciona tu método de pago preferido para formalizar tus servicios desde cualquier lugar de Latinoamérica.")
+    st.write("Selecciona tu método de pago preferido para formalizar tus servicios desde Venezuela o el extranjero.")
 
-    pay_col1, pay_col2 = st.columns(2)
+    pay_col1, pay_col2, pay_col3 = st.columns(3)
 
     with pay_col1:
         st.markdown("""
@@ -371,27 +371,39 @@ with tab3:
                 <h3 style="color:#0A2540; margin-top:0;">🇻🇪 Pago Móvil (Venezuela)</h3>
                 <p><b>Banco:</b> 0102 - Banco de Venezuela</p>
                 <p><b>Teléfono:</b> 0412-0582064</p>
-                <p><b>Cédula de Identidad:</b> V-15.642.481</p>
+                <p><b>Cédula:</b> V-15.642.481</p>
                 <p><b>Titular:</b> Carlos Pacheco</p>
-                <small style="color:#6C757D;">Transacción inmediata sin comisiones adicionales.</small>
+                <small style="color:#6C757D;">Transacción nacional inmediata.</small>
             </div>
         """, unsafe_allow_html=True)
 
     with pay_col2:
         st.markdown("""
             <div class="payment-box">
-                <h3 style="color:#0A2540; margin-top:0;">🌎 Transferencia Internacional ACH Xpress</h3>
-                <p><b>Titular de la Cuenta:</b> Rosa Pacheco</p>
-                <p><b>Número de Cuenta:</b> 3-002-05387291-65</p>
-                <p><b>Tipo de Cuenta:</b> Cuenta de Ahorro</p>
-                <p><b>Dominio Asociado:</b> pachecoazuajerosamaria.com</p>
-                <small style="color:#6C757D;">Exclusivo para transacciones ACH Xpress internacionales.</small>
+                <h3 style="color:#0A2540; margin-top:0;">🌐 Tarjeta Zinli (Internacional)</h3>
+                <p><b>VISA:</b> 4850 4600 6413 3100</p>
+                <p><b>Titular:</b> CARLOS LUIS PACHECO AZUAJE</p>
+                <p><b>Válido Hasta:</b> 10/29</p>
+                <p><b>CVV:</b> 452</p>
+                <small style="color:#6C757D;">Pagos seguros por internet.</small>
+            </div>
+        """, unsafe_allow_html=True)
+
+    with pay_col3:
+        st.markdown("""
+            <div class="payment-box">
+                <h3 style="color:#0A2540; margin-top:0;">💳 Tarjeta Wally (Internacional)</h3>
+                <p><b>Número:</b> 5327 2501 3701 4060</p>
+                <p><b>Titular:</b> CARLOS PACHECO</p>
+                <p><b>Válida Hasta:</b> 10/31</p>
+                <p><b>CVV:</b> 389</p>
+                <small style="color:#6C757D;">Pagos internacionales rápidos.</small>
             </div>
         """, unsafe_allow_html=True)
 
     st.markdown("---")
     st.subheader("📩 Confirmación de Pago")
-    st.write("Una vez realizada tu transferencia o Pago Móvil, envía tu comprobante por correo o WhatsApp para activar tu plan:")
+    st.write("Una vez realizada tu transacción por Pago Móvil, Zinli o Wally, envía tu comprobante para activar tu plan:")
     st.write("📧 **Correo Oficial:** pachecohx@gmail.com")
     st.write("📱 **WhatsApp Soporte Directo:** +58 412-0582064")
 
