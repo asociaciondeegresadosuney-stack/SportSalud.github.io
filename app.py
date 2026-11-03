@@ -72,6 +72,16 @@ st.markdown("""
         margin: 1.5rem 0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+    .training-access-box {
+        background: linear-gradient(135deg, #1A365D 0%, #2C5282 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-align: center;
+        margin: 1.5rem 0;
+        border: 2px solid #00E6C3;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    }
     .payment-box {
         background-color: #F1F3F5;
         padding: 1.5rem;
@@ -345,7 +355,7 @@ with tab1:
     """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# TAB 2: SERVICIOS MÉDICOS OFRECIDOS (Con Módulo NutriSalud incorporado)
+# TAB 2: SERVICIOS MÉDICOS OFRECIDOS (Con Módulo NutriSalud y Acceso al Programa Clínico)
 # -----------------------------------------------------------------------------
 with tab2:
     st.header("Servicios Especializados de Fisiología, Salud Vascular & Nutrición")
@@ -383,12 +393,30 @@ with tab2:
         if st.button("Adquirir Módulo NutriSalud", key="btn_nutri"):
             st.info("Utiliza la pestaña 'Pasarela de Pagos' o contáctanos por WhatsApp para activar tu acceso inmediato.")
 
+    # -----------------------------------------------------------------------------
+    # SECCIÓN DE ACCESO AL PROGRAMA CLÍNICO DE ENTRENAMIENTO (Post-pago)
+    # -----------------------------------------------------------------------------
+    st.markdown("---")
+    st.markdown("""
+        <div class="training-access-box">
+            <h3 style="margin:0; color:#00E6C3;">🏋️‍♂️ Acceso al Programa Clínico de Entrenamiento Vascular</h3>
+            <p style="margin:0.6rem 0 1rem 0; color:#E2E8F0; font-size:1.02rem;">
+                <b>¡Importante!</b> Para ingresar a la plataforma de entrenamiento, <b>debes haber pagado previamente el programa de asesoramiento online</b> en la pestaña de pasarela de pagos y reportado tu comprobante. Si ya completaste tu pago, ingresa aquí:
+            </p>
+            <a href="https://programa-entrenamiento-vascular-d6lcvaykter5lcimuifdbj.streamlit.app/" target="_blank">
+                <button style="background-color:#00E6C3; color:#0A2540; padding:12px 24px; border:none; border-radius:8px; font-weight:bold; font-size:1.05rem; cursor:pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+                    🚀 Ingresar al Programa Clínico de Entrenamiento
+                </button>
+            </a>
+        </div>
+    """, unsafe_allow_html=True)
+
 # -----------------------------------------------------------------------------
 # TAB 3: PASARELA DE PAGOS (Pago Móvil, Zinli & Wally)
 # -----------------------------------------------------------------------------
 with tab3:
     st.header("Pasarela de Pagos Directa & Segura")
-    st.write("Selecciona tu método de pago preferido para formalizar tus servicios desde Venezuela o el extranjero.")
+    st.write("Selecciona tu método de pago preferido para formalizar tus servicios antes de acceder al programa de entrenamiento.")
 
     pay_col1, pay_col2, pay_col3 = st.columns(3)
 
@@ -430,7 +458,7 @@ with tab3:
 
     st.markdown("---")
     st.subheader("📩 Confirmación de Pago")
-    st.write("Una vez realizada tu transacción por Pago Móvil, Zinli o Wally, envía tu comprobante para activar tu plan:")
+    st.write("Una vez realizada tu transacción por Pago Móvil, Zinli o Wally, envía tu comprobante para activar tu usuario y acceder al programa clínico:")
     st.write("📧 **Correo Oficial:** pachecohx@gmail.com")
     st.write("📱 **WhatsApp Soporte Directo:** +58 412-0582064")
 
